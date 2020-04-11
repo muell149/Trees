@@ -1,0 +1,20 @@
+export PS1='[\u@\h \W]:'
+export TMOUT=0
+
+alias ds2='ssh il-abs-ds-02'
+alias ds1='ssh il-abs-ds-01'
+alias redwood='ssh redwood_edge'
+alias hop='ssh hop'
+alias emr='ssh emr'
+alias emr2='ssh emr2'
+alias ec2_sandbox='ssh ec2_sandbox'
+alias ec2_fwd='ssh ec2_fwd'
+alias emr_fwd='ssh emr_fwd'
+alias emr_fwd2='ssh emr_fwd2'
+alias sql_workbench='java -jar /Applications/SQLWorkbenchJ.app/Contents/Java/sqlworkbench.jar </dev/null &>/dev/null &'
+alias jupyter_hop='ssh -L 9096:127.0.0.1:9096 cmueller@10.245.217.225'
+alias showpwd='cat ~/Documents/.words.txt'
+#alias il-abs-ds-01='ssh il-abs-ds-01'
+
+alias encrypt='openssl aes-256-cbc -salt -in .words.txt -out .words.txt.aes && rm -rf .words.txt && rm -rf .words.txt~'
+alias decrypt='openssl aes-256-cbc -d -salt -in .words.txt.aes -out .words.txt'

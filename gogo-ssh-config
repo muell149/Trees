@@ -1,0 +1,106 @@
+#save on local as ~/.ssh/config
+
+Compression yes
+ForwardAgent yes
+ForwardX11 yes
+ForwardX11Trusted yes
+ServerAliveInterval 150
+GSSAPIAuthentication yes
+GSSAPIDelegateCredentials yes
+ControlMaster         auto
+#ControlPath ~/.ssh/control-%r@%h:%p
+
+Host il-abs-ds-02
+
+       #HostName              10.240.121.7
+       HostName              10.220.19.7
+       User                  generaluser
+       ControlMaster         auto
+       ControlPersist        1
+
+Host il-abs-ds-01
+
+       HostName              10.220.19.4
+       User                  generaluser
+       ControlMaster         auto
+       ControlPersist        1
+
+Host redwood_edge
+     
+       HostName              10.221.101.21
+       User                  etl-user
+       ControlMaster         auto
+       ControlPersist        1
+
+Host hop
+     
+       HostName              hop.prod.gogoair.com 
+       User                  cmueller
+       IdentityFile          /Users/cmueller/.ssh/id_rsa_hop
+       ControlMaster         auto
+       ControlPersist        1
+
+
+Host hop_fwd
+     
+       HostName              hop.prod.gogoair.com 
+       User                  cmueller
+       IdentityFile          /Users/cmueller/.ssh/id_rsa_hop
+       LocalForward          9097 127.0.0.1:9097
+       ControlMaster         auto
+       ControlPersist        1
+
+Host emr
+
+	HostName ip-10-245-90-74.ec2.internal
+	User hadoop
+	ProxyJump hop
+	IdentityFile    /Users/cmueller/.ssh/prod_us-east-1_udp_emr_spark.pem
+
+Host emr2
+
+	HostName ip-10-245-124-185.ec2.internal
+	User hadoop
+	ProxyJump hop
+	IdentityFile    /Users/cmueller/.ssh/prod_us-east-1_udp_emr_spark.pem
+
+
+Host emr_fwd
+
+	HostName        ip-10-245-90-74.ec2.internal	
+	User		hadoop
+	LocalForward    9097 127.0.0.1:9097		
+	ProxyJump 	hop_fwd
+	IdentityFile    /Users/cmueller/.ssh/prod_us-east-1_udp_emr_spark.pem
+
+Host emr_fwd2
+
+	HostName        ip-10-245-124-185.ec2.internal	
+	User		hadoop
+	LocalForward    9097 127.0.0.1:9097		
+	ProxyJump 	hop_fwd
+	IdentityFile    /Users/cmueller/.ssh/prod_us-east-1_udp_emr_spark.pem
+
+Host ec2_sandbox
+
+	#HostName ip-10-245-117-71.ec2.internal
+	HostName ip-172-31-79-7.ec2.internal
+	User cmueller
+	ProxyJump hop
+	IdentityFile /Users/cmueller/.ssh/prod_gdw_emr_spark.pem
+
+
+
+Host ec2_fwd
+
+	HostName        ip-10-245-117-239.ec2.internal
+        User            cmueller
+	LocalForward    9097 127.0.0.1:9097
+        ProxyJump       hop_fwd
+        IdentityFile    /Users/cmueller/.ssh/prod_us-east-1_udp_emr_spark.pem
+
+
+Host git.gogoair.com
+
+	PubkeyAuthentication yes
+	IdentityFile /Users/cmueller/.ssh/gogo
